@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block content %}
+	<h1>Thêm sản phẩm</h1>
+	<hr>
+	<div class="container">
+		<form action="/add/" method="POST" enctype="multipart/form-data">
+			{% csrf_token %}
+		<fieldset class="form-group">
+			<label for="formGroupExampleInput">Tên sản phẩm</label>
+			<input type="text" name="ten" class="form-control" required autocomplete="off">
+		</fieldset>
+		<fieldset class="form-group">
+			<label for="formGroupExampleInput2">giá :</label>
+			<input type="text" name="gia" class="form-control" required autocomplete="off">
+		</fieldset>
+		<fieldset class="form-group">
+			<label for="formGroupExampleInput2">Mô tả :</label>
+			<textarea type="text" name="mota" class="form-control" id="formGroupExampleInput2"></textarea>
+		</fieldset>
+		<fieldset class="form-group">
+			<label for="formGroupExampleInput2">Danh mục :</label>
+			<select class="custom-select" name="cate_id">
+			{% for dulieu in list %}
+			  <option value="{{ dulieu.id }}">{{ dulieu.ten }}</option>
+			{% endfor %}
+			</select>
+		</fieldset>
+		<fieldset class="form-group">
+			<label for="formGroupExampleInput2">Ảnh :</label>
+			<input type="file" name="anh" class="form-control" required >
+		</fieldset>
+		<input type="submit" class="btn btn-success" name="them" value="Thêm">
+		<input type=button class="btn btn-info" value="Quay lại" onClick="javascript:history.go(-1);">
+	</form>
+
+	</div>
+{% endblock %}

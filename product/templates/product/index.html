@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+{% block content %}
+	<h1>Danh sách sản phẩm</h1>
+	
+	<hr>
+		{% for message in messages %}
+		<div class="container-fluid p-0">
+		  <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+		    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		      <span aria-hidden="True">&times;</span>
+		    </button>
+		    {{ message }}
+		  </div>
+		</div>
+		{% endfor %}
+
+	<div class="container">
+		<table class="table table-bordered">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">Mã</th>
+		      <th scope="col">Tên sản phẩm</th>
+		      <th>Ảnh</th>
+		      <th>Danh mục</th>
+		      <th scope="col">Giá</th>
+		      <th scope="col">Mô tả</th>
+		      <th>chi tiết</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		  	{% for dulieu in list %}
+			    <tr>
+			      <td>{{ dulieu.id }}</td>
+			      <td>{{ dulieu.ten }}</td>
+			      <td><img src="/home/media/{{ dulieu.anh }}" width="100px" height="100px" alt=""></td>
+			      {% for ca in cate %}
+			      {% if dulieu.cate_id == ca.id %}
+			      <td>{{ ca.ten }}</td>
+			      {% endif %}
+			      {% endfor %}
+			      <td>{{ dulieu.gia }}</td>
+			      <td>{{ dulieu.mota }}</td>
+
+			      <form action="/xoa/{{ dulieu.id }}" method="GET" enctype="multipart/form-data">
+					{% csrf_token %}
+			      <td>
+			      	<a class="btn btn-warning" href="/sua/{{ dulieu.id }}">Sửa</a>
+			      	<input type="submit" class="btn btn-danger" name="xoa" onclick="return confirm('xác nhận xóa')" value="Xóa">
+			      </td>
+			      </form>
+
+			    </tr>
+		   	{% endfor %}
+		  </tbody>
+		</table>
+		<a class="btn btn-success" href="/them/">Thêm mới</a>
+		<!-- <input type=button class="btn btn-info" value="Quay lại" onClick="javascript:history.go(-1);"> -->
+		<a href="/admin/" class="btn btn-info">Về admin</a>
+		
+	</div>
+{% endblock %}
